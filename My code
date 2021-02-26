@@ -1,0 +1,199 @@
+octave:1> x1=[23,3,2,40]
+x1 =
+
+   23    3    2   40
+
+octave:2> x2=[4,6,1,1]
+x2 =
+
+   4   6   1   1
+
+octave:3> x3=[1,2,3,32]
+x3 =
+
+    1    2    3   32
+
+octave:4> th=[.02,.03,.04,05]
+th =
+
+   0.020000   0.030000   0.040000   5.000000
+
+octave:5> al=.01
+al = 0.010000
+octave:6> x=[1,23,0,3]
+x =
+
+    1   23    0    3
+
+octave:7> y=[1,1,1,1]
+y =
+
+   1   1   1   1
+
+octave:8> y1=[1,0,0,1]
+y1 =
+
+   1   0   0   1
+
+octave:9> y2=[0,0,1,0]
+y2 =
+
+   0   0   1   0
+
+octave:10> y3=[0,0,0,1]
+y3 =
+
+   0   0   0   1
+
+octave:11> class1Th=zeros(1,length(x1))
+class1Th =
+
+  0  0  0  0
+
+octave:12> class2Th=zeros(1,length(x1))
+class2Th =
+
+  0  0  0  0
+
+octave:13> class3Th=zeros(1,length(x1))
+class3Th =
+
+  0  0  0  0
+
+octave:14> classZero = [y;x1;x2;x3]
+classZero =
+
+    1    1    1    1
+   23    3    2   40
+    4    6    1    1
+    1    2    3   32
+
+octave:15> hypo = zeros(1,length(x1));
+octave:16> i = 1
+i = 1
+octave:17> while i<=length(x1)
+> > hypo(i) = 1/(1+e.^(-sum(classZero(:,i).*th')))	
+> > i++
+> > end
+hypo =
+
+   0.9972        0        0        0
+
+ans = 1
+hypo =
+
+   0.9972   1.0000        0        0
+
+ans = 2
+hypo =
+
+   0.9972   1.0000   1.0000        0
+
+ans = 3
+hypo =
+
+   0.9972   1.0000   1.0000   1.0000
+
+ans = 4
+octave:18> cost1 = (1./(2.*length(x1))).*sum((hypo-y1).^2)
+cost1 = 0.2500
+octave:19> i = 1
+i = 1
+octave:20> while i<=length(x1)
+> > class1Th(i) = th(i) - al.(1/length(x1))*sum((y1 - hypo)(classZero(i,:))')
+> > i++
+> > end
+class1Th =
+
+   0.024993          0          0          0
+
+ans = 1
+class1Th =
+
+   0.024993   0.042338          0          0
+
+ans = 2
+class1Th =
+
+   0.024993   0.042338   0.057471          0
+
+ans = 3
+class1Th =
+
+   0.024993   0.042338   0.057471   5.012493
+
+ans = 4
+octave:21> cost2 = (1./(2.*length(x1))).*sum((hypo-y2).^2)
+cost2 = 0.3743
+octave:22> i = 1
+i = 1
+octave:23> while i<=length(x1)
+
+> > class2Th(i) = th(i) - al.(1/length(x1))*sum((y2 - hypo)(classZero(i,:))')
+> > i++
+> > end
+class2Th =
+
+   0.027493          0          0          0
+
+ans = 1
+class2Th =
+
+   0.0275   0.1948        0        0
+
+ans = 2
+class2Th =
+
+   0.0275   0.1948   0.0675        0
+
+ans = 3
+class2Th =
+
+   0.027493   0.194838   0.067471   5.087493
+
+ans = 4
+octave:24> cost3 = (1./(2.*length(x1))).*sum((hypo-y3).^2)
+cost3 = 0.3743
+octave:25> i = 1
+i = 1
+octave:26> while i<=length(x1)
+> > class3Th(i) = th(i) - al.(1/length(x1))*sum((y3 - hypo)(classZero(i,:))')
+> > i++
+
+> > end
+class3Th =
+
+   0.027493          0          0          0
+
+ans = 1
+class3Th =
+
+   0.027493   0.099838          0          0
+
+ans = 2
+class3Th =
+
+   0.027493   0.099838   0.067471          0
+
+ans = 3
+class3Th =
+
+   0.027493   0.099838   0.067471   5.014993
+
+ans = 4
+octave:27> For class one
+error: 'For' undefined near line 1, column 1
+octave:28> hValue(1) = class1Th*x'
+hValue = 16.036
+octave:29> hValue(2) = class2Th*x'
+hValue =
+
+   16.036   19.771
+
+octave:30> hValue(3) = class3Th*x'
+hValue =
+
+   16.036   19.771   17.369
+
+octave:31> max(hValue)
+ans = 19.771
